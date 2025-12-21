@@ -6,9 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { Prisma } from '../generated/prisma/client';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 
 @Controller('articles')
 export class ArticlesController {
@@ -20,8 +22,8 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.articlesService.findAll(paginationQuery);
   }
 
   @Get(':id')
