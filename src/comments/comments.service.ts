@@ -36,18 +36,6 @@ export class CommentsService {
     }
   }
 
-  async findAllByArticle(articleId: string) {
-    return await this.databaseService.comment.findMany({
-      where: { articleId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        article: {
-          select: { id: true, title: true },
-        },
-      },
-    });
-  }
-
   async findOne(id: string) {
     const comment = await this.databaseService.comment.findUnique({
       where: { id },
