@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const ArticleType = {
+  long: 'long',
+  short: 'short'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type ArticleType = (typeof ArticleType)[keyof typeof ArticleType]

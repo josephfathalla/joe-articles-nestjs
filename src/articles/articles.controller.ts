@@ -11,13 +11,15 @@ import {
 import { ArticlesService } from './articles.service';
 import { Prisma } from '../generated/prisma/client';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
-  create(@Body() createArticleDto: Prisma.ArticleCreateInput) {
+  create(@Body() createArticleDto: CreateArticleDto) {
     return this.articlesService.create(createArticleDto);
   }
 
@@ -32,10 +34,7 @@ export class ArticlesController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateArticleDto: Prisma.ArticleUpdateInput,
-  ) {
+  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articlesService.update(id, updateArticleDto);
   }
 
