@@ -22,10 +22,22 @@ model Article {
   type ArticleType
   createdAt DateTime @default(now())
   modifiedAt DateTime @updatedAt
+  comments    Comment[]
 }
 
 
 enum ArticleType {
  long
  short
+}
+
+
+model Comment {
+  id String @id @default(uuid())
+  text String
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  articleId String
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  @@index([articleId])
 }

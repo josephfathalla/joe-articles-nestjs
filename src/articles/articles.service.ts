@@ -51,6 +51,7 @@ export class ArticlesService {
   async findOne(id: string) {
     const article = await this.databaseService.article.findUnique({
       where: { id },
+      include: { comments: { orderBy: { createdAt: 'desc' } } },
     });
 
     if (!article) {
