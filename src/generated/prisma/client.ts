@@ -42,3 +42,8 @@ export { Prisma }
  * 
  */
 export type Article = Prisma.ArticleModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel

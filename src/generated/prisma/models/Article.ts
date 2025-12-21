@@ -190,6 +190,7 @@ export type ArticleWhereInput = {
   type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
+  comments?: Prisma.CommentListRelationFilter
 }
 
 export type ArticleOrderByWithRelationInput = {
@@ -199,6 +200,7 @@ export type ArticleOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  comments?: Prisma.CommentOrderByRelationAggregateInput
 }
 
 export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -211,6 +213,7 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
+  comments?: Prisma.CommentListRelationFilter
 }, "id">
 
 export type ArticleOrderByWithAggregationInput = {
@@ -244,6 +247,7 @@ export type ArticleCreateInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  comments?: Prisma.CommentCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUncheckedCreateInput = {
@@ -253,6 +257,7 @@ export type ArticleUncheckedCreateInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutArticleInput
 }
 
 export type ArticleUpdateInput = {
@@ -262,6 +267,7 @@ export type ArticleUpdateInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateInput = {
@@ -271,6 +277,7 @@ export type ArticleUncheckedUpdateInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleCreateManyInput = {
@@ -327,6 +334,11 @@ export type ArticleMinOrderByAggregateInput = {
   modifiedAt?: Prisma.SortOrder
 }
 
+export type ArticleScalarRelationFilter = {
+  is?: Prisma.ArticleWhereInput
+  isNot?: Prisma.ArticleWhereInput
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -339,6 +351,101 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type ArticleCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutCommentsInput, Prisma.ArticleUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.ArticleWhereUniqueInput
+}
+
+export type ArticleUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutCommentsInput, Prisma.ArticleUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.ArticleUpsertWithoutCommentsInput
+  connect?: Prisma.ArticleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ArticleUpdateToOneWithWhereWithoutCommentsInput, Prisma.ArticleUpdateWithoutCommentsInput>, Prisma.ArticleUncheckedUpdateWithoutCommentsInput>
+}
+
+export type ArticleCreateWithoutCommentsInput = {
+  id?: string
+  title: string
+  description: string
+  type: $Enums.ArticleType
+  createdAt?: Date | string
+  modifiedAt?: Date | string
+}
+
+export type ArticleUncheckedCreateWithoutCommentsInput = {
+  id?: string
+  title: string
+  description: string
+  type: $Enums.ArticleType
+  createdAt?: Date | string
+  modifiedAt?: Date | string
+}
+
+export type ArticleCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.ArticleWhereUniqueInput
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutCommentsInput, Prisma.ArticleUncheckedCreateWithoutCommentsInput>
+}
+
+export type ArticleUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.ArticleUpdateWithoutCommentsInput, Prisma.ArticleUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutCommentsInput, Prisma.ArticleUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.ArticleWhereInput
+}
+
+export type ArticleUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.ArticleWhereInput
+  data: Prisma.XOR<Prisma.ArticleUpdateWithoutCommentsInput, Prisma.ArticleUncheckedUpdateWithoutCommentsInput>
+}
+
+export type ArticleUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ArticleUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type ArticleCountOutputType
+ */
+
+export type ArticleCountOutputType = {
+  comments: number
+}
+
+export type ArticleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  comments?: boolean | ArticleCountOutputTypeCountCommentsArgs
+}
+
+/**
+ * ArticleCountOutputType without action
+ */
+export type ArticleCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ArticleCountOutputType
+   */
+  select?: Prisma.ArticleCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ArticleCountOutputType without action
+ */
+export type ArticleCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommentWhereInput
+}
 
 
 export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -348,6 +455,8 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
+  comments?: boolean | Prisma.Article$commentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
 export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -378,10 +487,18 @@ export type ArticleSelectScalar = {
 }
 
 export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "type" | "createdAt" | "modifiedAt", ExtArgs["result"]["article"]>
+export type ArticleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  comments?: boolean | Prisma.Article$commentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ArticleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
-  objects: {}
+  objects: {
+    comments: Prisma.$CommentPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
@@ -783,6 +900,7 @@ readonly fields: ArticleFieldRefs;
  */
 export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  comments<T extends Prisma.Article$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -835,6 +953,10 @@ export type ArticleFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * Filter, which Article to fetch.
    */
   where: Prisma.ArticleWhereUniqueInput
@@ -853,6 +975,10 @@ export type ArticleFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * Filter, which Article to fetch.
    */
   where: Prisma.ArticleWhereUniqueInput
@@ -870,6 +996,10 @@ export type ArticleFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Article
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
   /**
    * Filter, which Article to fetch.
    */
@@ -919,6 +1049,10 @@ export type ArticleFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * Filter, which Article to fetch.
    */
   where?: Prisma.ArticleWhereInput
@@ -967,6 +1101,10 @@ export type ArticleFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * Filter, which Articles to fetch.
    */
   where?: Prisma.ArticleWhereInput
@@ -1009,6 +1147,10 @@ export type ArticleCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Article
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
   /**
    * The data needed to create a Article.
    */
@@ -1057,6 +1199,10 @@ export type ArticleUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Article
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
   /**
    * The data needed to update a Article.
    */
@@ -1124,6 +1270,10 @@ export type ArticleUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * The filter to search for the Article to update in case it exists.
    */
   where: Prisma.ArticleWhereUniqueInput
@@ -1150,6 +1300,10 @@ export type ArticleDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  /**
    * Filter which Article to delete.
    */
   where: Prisma.ArticleWhereUniqueInput
@@ -1170,6 +1324,30 @@ export type ArticleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Article.comments
+ */
+export type Article$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Comment
+   */
+  select?: Prisma.CommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Comment
+   */
+  omit?: Prisma.CommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommentInclude<ExtArgs> | null
+  where?: Prisma.CommentWhereInput
+  orderBy?: Prisma.CommentOrderByWithRelationInput | Prisma.CommentOrderByWithRelationInput[]
+  cursor?: Prisma.CommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
+}
+
+/**
  * Article without action
  */
 export type ArticleDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1181,4 +1359,8 @@ export type ArticleDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Article
    */
   omit?: Prisma.ArticleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleInclude<ExtArgs> | null
 }
