@@ -8,8 +8,14 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
-      transform: true,
+      whitelist: true, // Strip properties without decorators
+      forbidNonWhitelisted: true, // Throw error for non-whitelisted properties
+      transform: true, // Auto-transform payloads to DTO instances
+      transformOptions: {
+        enableImplicitConversion: true, // Auto-convert types (string to number, etc.)
+      },
+      disableErrorMessages: false, // Show detailed error messages
+      stopAtFirstError: false,
     }),
   );
 

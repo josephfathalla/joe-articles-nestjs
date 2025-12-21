@@ -19,6 +19,13 @@ model Article {
   id String @id @default(uuid())
   title String
   description String
+  type ArticleType
   createdAt DateTime @default(now())
   modifiedAt DateTime @updatedAt
+}
+
+
+enum ArticleType {
+ long
+ short
 }

@@ -28,6 +28,7 @@ export type ArticleMinAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  type: $Enums.ArticleType | null
   createdAt: Date | null
   modifiedAt: Date | null
 }
@@ -36,6 +37,7 @@ export type ArticleMaxAggregateOutputType = {
   id: string | null
   title: string | null
   description: string | null
+  type: $Enums.ArticleType | null
   createdAt: Date | null
   modifiedAt: Date | null
 }
@@ -44,6 +46,7 @@ export type ArticleCountAggregateOutputType = {
   id: number
   title: number
   description: number
+  type: number
   createdAt: number
   modifiedAt: number
   _all: number
@@ -54,6 +57,7 @@ export type ArticleMinAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  type?: true
   createdAt?: true
   modifiedAt?: true
 }
@@ -62,6 +66,7 @@ export type ArticleMaxAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  type?: true
   createdAt?: true
   modifiedAt?: true
 }
@@ -70,6 +75,7 @@ export type ArticleCountAggregateInputType = {
   id?: true
   title?: true
   description?: true
+  type?: true
   createdAt?: true
   modifiedAt?: true
   _all?: true
@@ -151,6 +157,7 @@ export type ArticleGroupByOutputType = {
   id: string
   title: string
   description: string
+  type: $Enums.ArticleType
   createdAt: Date
   modifiedAt: Date
   _count: ArticleCountAggregateOutputType | null
@@ -180,6 +187,7 @@ export type ArticleWhereInput = {
   id?: Prisma.StringFilter<"Article"> | string
   title?: Prisma.StringFilter<"Article"> | string
   description?: Prisma.StringFilter<"Article"> | string
+  type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
 }
@@ -188,6 +196,7 @@ export type ArticleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
 }
@@ -199,6 +208,7 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ArticleWhereInput | Prisma.ArticleWhereInput[]
   title?: Prisma.StringFilter<"Article"> | string
   description?: Prisma.StringFilter<"Article"> | string
+  type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
 }, "id">
@@ -207,6 +217,7 @@ export type ArticleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
   _count?: Prisma.ArticleCountOrderByAggregateInput
@@ -221,6 +232,7 @@ export type ArticleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Article"> | string
   title?: Prisma.StringWithAggregatesFilter<"Article"> | string
   description?: Prisma.StringWithAggregatesFilter<"Article"> | string
+  type?: Prisma.EnumArticleTypeWithAggregatesFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
 }
@@ -229,6 +241,7 @@ export type ArticleCreateInput = {
   id?: string
   title: string
   description: string
+  type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
 }
@@ -237,6 +250,7 @@ export type ArticleUncheckedCreateInput = {
   id?: string
   title: string
   description: string
+  type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
 }
@@ -245,6 +259,7 @@ export type ArticleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -253,6 +268,7 @@ export type ArticleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -261,6 +277,7 @@ export type ArticleCreateManyInput = {
   id?: string
   title: string
   description: string
+  type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
 }
@@ -269,6 +286,7 @@ export type ArticleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -277,6 +295,7 @@ export type ArticleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -285,6 +304,7 @@ export type ArticleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
 }
@@ -293,6 +313,7 @@ export type ArticleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
 }
@@ -301,12 +322,17 @@ export type ArticleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type EnumArticleTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ArticleType
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -319,6 +345,7 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   title?: boolean
   description?: boolean
+  type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
 }, ExtArgs["result"]["article"]>
@@ -327,6 +354,7 @@ export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
+  type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
 }, ExtArgs["result"]["article"]>
@@ -335,6 +363,7 @@ export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   title?: boolean
   description?: boolean
+  type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
 }, ExtArgs["result"]["article"]>
@@ -343,11 +372,12 @@ export type ArticleSelectScalar = {
   id?: boolean
   title?: boolean
   description?: boolean
+  type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
 }
 
-export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "createdAt" | "modifiedAt", ExtArgs["result"]["article"]>
+export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "type" | "createdAt" | "modifiedAt", ExtArgs["result"]["article"]>
 
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
@@ -356,6 +386,7 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     title: string
     description: string
+    type: $Enums.ArticleType
     createdAt: Date
     modifiedAt: Date
   }, ExtArgs["result"]["article"]>
@@ -784,6 +815,7 @@ export interface ArticleFieldRefs {
   readonly id: Prisma.FieldRef<"Article", 'String'>
   readonly title: Prisma.FieldRef<"Article", 'String'>
   readonly description: Prisma.FieldRef<"Article", 'String'>
+  readonly type: Prisma.FieldRef<"Article", 'ArticleType'>
   readonly createdAt: Prisma.FieldRef<"Article", 'DateTime'>
   readonly modifiedAt: Prisma.FieldRef<"Article", 'DateTime'>
 }
