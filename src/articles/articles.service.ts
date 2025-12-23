@@ -248,4 +248,78 @@ export class ArticlesService {
     await this.findOne(id);
     return await this.databaseService.article.delete({ where: { id } });
   }
+
+  async removeBulk(ids: string[]) {
+    // to verify the ids are valid
+    const articles = await this.databaseService.article.findMany({
+      where: { id: { in: ids } },
+    });
+    if (articles.length !== ids.length) {
+      const foundIds = articles.map((a) => a.id);
+      const missingIds = ids.filter((id) => !foundIds.includes(id));
+      throw new NotFoundException(
+        `Articles with IDs "${missingIds.join(', ')}" not found`,
+      );
+    }
+    return await this.databaseService.article.deleteMany({
+      where: { id: { in: ids } },
+    });
+  }
+
+  async bulkArticlesCategoryAssign(
+    categoryId: string,
+    articleIds: string[],
+  ): Promise<{ count: number; message: string }> {
+    try {
+      // Verify category exists
+      const category = await this.databaseService.category.findUnique({
+        where: { id: categoryId },
+      });
+
+      if (!category) {
+        throw new NotFoundException(
+          `Category with ID "${categoryId}" not found`,
+        );
+      }
+
+      // Verify articles exist
+      const existingArticles = await this.databaseService.article.findMany({
+        where: {
+          id: { in: articleIds },
+        },
+      });
+
+      if (existingArticles.length !== articleIds.length) {
+        const foundIds = existingArticles.map((a) => a.id);
+        const missingIds = articleIds.filter((id) => !foundIds.includes(id));
+        throw new NotFoundException(
+          `Articles with IDs "${missingIds.join(', ')}" not found`,
+        );
+      }
+
+      // Use transaction to update all articles
+      const result = await this.databaseService.$transaction(
+        articleIds.map((articleId) =>
+          this.databaseService.article.update({
+            where: { id: articleId },
+            data: {
+              categories: {
+                connect: { id: categoryId },
+              },
+            },
+          }),
+        ),
+      );
+
+      return {
+        count: result.length,
+        message: `Successfully assigned category to ${result.length} article(s)`,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to assign category to articles');
+    }
+  }
 }
