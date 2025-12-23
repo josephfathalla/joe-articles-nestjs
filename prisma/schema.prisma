@@ -23,6 +23,7 @@ model Article {
   createdAt DateTime @default(now())
   modifiedAt DateTime @updatedAt
   comments    Comment[]
+  categories Category[]
 }
 
 
@@ -40,4 +41,13 @@ model Comment {
   articleId String
   article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
   @@index([articleId])
+}
+
+
+model Category {
+  id String @id @default(uuid())
+  name String
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  articles Article[]
 }

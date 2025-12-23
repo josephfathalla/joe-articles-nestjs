@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, Min, Max } from 'class-validator';
+import { IsInt, IsOptional, Min, Max, IsUUID } from 'class-validator';
 
 export class PaginationQueryDto {
   @IsOptional()
@@ -20,4 +20,8 @@ export class PaginationQueryDto {
 
   @IsOptional()
   sortOrder?: 'asc' | 'desc' = 'desc';
+
+  @IsOptional()
+  @IsUUID('4', { message: 'Invalid article ID format' })
+  categoryId?: string;
 }
