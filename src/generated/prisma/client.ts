@@ -47,3 +47,8 @@ export type Article = Prisma.ArticleModel
  * 
  */
 export type Comment = Prisma.CommentModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel

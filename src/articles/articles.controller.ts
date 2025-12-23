@@ -9,7 +9,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
-import { Prisma } from '../generated/prisma/client';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
