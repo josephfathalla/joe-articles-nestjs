@@ -27,7 +27,7 @@ export class CategoriesService {
   async findAll() {
     return await this.databaseService.category.findMany({
       orderBy: { createdAt: 'desc' },
-      include: { articles: { select: { id: true, title: true } } },
+      include: { articles: true, _count: true },
     });
   }
 
