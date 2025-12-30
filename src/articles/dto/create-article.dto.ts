@@ -5,21 +5,11 @@ import {
   IsArray,
   MaxLength,
   MinLength,
-  ValidateNested,
   IsUUID,
   IsOptional,
 } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { ArticleType } from '../../generated/prisma/client';
-
-class CreateCategoryDto {
-  @Transform(({ value }: { value: string }) => value?.trim())
-  @IsString()
-  @IsNotEmpty({ message: 'Category name is required' })
-  @MinLength(1, { message: 'Category name must be at least 1 character' })
-  @MaxLength(50, { message: 'Category name cannot exceed 50 characters' })
-  name: string;
-}
 
 export class CreateArticleDto {
   @Transform(({ value }: { value: string }) => value?.trim())
@@ -40,14 +30,7 @@ export class CreateArticleDto {
   @IsNotEmpty({ message: 'Type is required' })
   type: ArticleType;
 
-  @IsOptional()
   @IsArray()
   @IsUUID('4', { each: true, message: 'Invalid category ID format' })
-  categoryIds?: string[];
-
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateCategoryDto)
-  categories?: CreateCategoryDto[];
+  categoryIds: string[];
 }
