@@ -5,49 +5,113 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
-  moduleFormat    = "cjs"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-
 model Article {
-  id String @id @default(uuid())
-  title String
+  id          String      @id @default(uuid())
+  title       String
   description String
-  type ArticleType
-  createdAt DateTime @default(now())
-  modifiedAt DateTime @updatedAt
+  type        ArticleType
+  createdAt   DateTime    @default(now())
+  modifiedAt  DateTime    @updatedAt
   comments    Comment[]
-  categories Category[]
+  categories  Category[]
 }
-
 
 enum ArticleType {
- long
- short
+  long
+  short
 }
 
-
 model Comment {
-  id String @id @default(uuid())
-  text String
-  createdAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  text       String
+  createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
-  articleId String
-  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId  String
+  article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
   @@index([articleId])
 }
 
-
 model Category {
-  id String @id @default(uuid())
-  name String
+  id         String    @id @default(uuid())
+  name       String
+  createdAt  DateTime  @default(now())
+  modifiedAt DateTime  @updatedAt
+  articles   Article[]
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  verifications Verification[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  token     String
   createdAt DateTime @default(now())
-  modifiedAt DateTime @updatedAt
-  articles Article[]
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([identifier])
+  @@index([userId])
+  @@map("verification")
 }
