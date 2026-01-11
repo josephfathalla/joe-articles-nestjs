@@ -2,9 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -14,7 +13,7 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true, // Auto-convert types (string to number, etc.)
       },
-      disableErrorMessages: false, // Show detailed error messages
+      disableErrorMessages: true, // Show detailed error messages
       stopAtFirstError: false,
     }),
   );
@@ -25,4 +24,7 @@ async function bootstrap() {
   await app.listen(3000);
   console.log('🚀 Application running on: http://localhost:3000');
 }
-bootstrap();
+bootstrap().catch((error) => {
+  console.error('❌ Error starting application:', error);
+  process.exit(1);
+});
