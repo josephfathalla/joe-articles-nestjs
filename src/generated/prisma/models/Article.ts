@@ -31,6 +31,7 @@ export type ArticleMinAggregateOutputType = {
   type: $Enums.ArticleType | null
   createdAt: Date | null
   modifiedAt: Date | null
+  userId: string | null
 }
 
 export type ArticleMaxAggregateOutputType = {
@@ -40,6 +41,7 @@ export type ArticleMaxAggregateOutputType = {
   type: $Enums.ArticleType | null
   createdAt: Date | null
   modifiedAt: Date | null
+  userId: string | null
 }
 
 export type ArticleCountAggregateOutputType = {
@@ -49,6 +51,7 @@ export type ArticleCountAggregateOutputType = {
   type: number
   createdAt: number
   modifiedAt: number
+  userId: number
   _all: number
 }
 
@@ -60,6 +63,7 @@ export type ArticleMinAggregateInputType = {
   type?: true
   createdAt?: true
   modifiedAt?: true
+  userId?: true
 }
 
 export type ArticleMaxAggregateInputType = {
@@ -69,6 +73,7 @@ export type ArticleMaxAggregateInputType = {
   type?: true
   createdAt?: true
   modifiedAt?: true
+  userId?: true
 }
 
 export type ArticleCountAggregateInputType = {
@@ -78,6 +83,7 @@ export type ArticleCountAggregateInputType = {
   type?: true
   createdAt?: true
   modifiedAt?: true
+  userId?: true
   _all?: true
 }
 
@@ -160,6 +166,7 @@ export type ArticleGroupByOutputType = {
   type: $Enums.ArticleType
   createdAt: Date
   modifiedAt: Date
+  userId: string | null
   _count: ArticleCountAggregateOutputType | null
   _min: ArticleMinAggregateOutputType | null
   _max: ArticleMaxAggregateOutputType | null
@@ -190,8 +197,10 @@ export type ArticleWhereInput = {
   type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
   comments?: Prisma.CommentListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ArticleOrderByWithRelationInput = {
@@ -201,8 +210,10 @@ export type ArticleOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   comments?: Prisma.CommentOrderByRelationAggregateInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ArticleWhereUniqueInput = Prisma.AtLeast<{
@@ -215,8 +226,10 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
   comments?: Prisma.CommentListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type ArticleOrderByWithAggregationInput = {
@@ -226,6 +239,7 @@ export type ArticleOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ArticleCountOrderByAggregateInput
   _max?: Prisma.ArticleMaxOrderByAggregateInput
   _min?: Prisma.ArticleMinOrderByAggregateInput
@@ -241,6 +255,7 @@ export type ArticleScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumArticleTypeWithAggregatesFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
 }
 
 export type ArticleCreateInput = {
@@ -252,6 +267,7 @@ export type ArticleCreateInput = {
   modifiedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutArticleInput
   categories?: Prisma.CategoryCreateNestedManyWithoutArticlesInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
 }
 
 export type ArticleUncheckedCreateInput = {
@@ -261,6 +277,7 @@ export type ArticleUncheckedCreateInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  userId?: string | null
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutArticleInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutArticlesInput
 }
@@ -274,6 +291,7 @@ export type ArticleUpdateInput = {
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutArticleNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutArticlesNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
 }
 
 export type ArticleUncheckedUpdateInput = {
@@ -283,6 +301,7 @@ export type ArticleUncheckedUpdateInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comments?: Prisma.CommentUncheckedUpdateManyWithoutArticleNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutArticlesNestedInput
 }
@@ -294,6 +313,7 @@ export type ArticleCreateManyInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  userId?: string | null
 }
 
 export type ArticleUpdateManyMutationInput = {
@@ -312,6 +332,7 @@ export type ArticleUncheckedUpdateManyInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ArticleCountOrderByAggregateInput = {
@@ -321,6 +342,7 @@ export type ArticleCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ArticleMaxOrderByAggregateInput = {
@@ -330,6 +352,7 @@ export type ArticleMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ArticleMinOrderByAggregateInput = {
@@ -339,6 +362,7 @@ export type ArticleMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   modifiedAt?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ArticleScalarRelationFilter = {
@@ -366,6 +390,10 @@ export type EnumArticleTypeFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type ArticleCreateNestedOneWithoutCommentsInput = {
@@ -420,6 +448,48 @@ export type ArticleUncheckedUpdateManyWithoutCategoriesNestedInput = {
   deleteMany?: Prisma.ArticleScalarWhereInput | Prisma.ArticleScalarWhereInput[]
 }
 
+export type ArticleCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput> | Prisma.ArticleCreateWithoutUserInput[] | Prisma.ArticleUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutUserInput | Prisma.ArticleCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ArticleCreateManyUserInputEnvelope
+  connect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+}
+
+export type ArticleUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput> | Prisma.ArticleCreateWithoutUserInput[] | Prisma.ArticleUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutUserInput | Prisma.ArticleCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.ArticleCreateManyUserInputEnvelope
+  connect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+}
+
+export type ArticleUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput> | Prisma.ArticleCreateWithoutUserInput[] | Prisma.ArticleUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutUserInput | Prisma.ArticleCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ArticleUpsertWithWhereUniqueWithoutUserInput | Prisma.ArticleUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ArticleCreateManyUserInputEnvelope
+  set?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  disconnect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  delete?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  connect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  update?: Prisma.ArticleUpdateWithWhereUniqueWithoutUserInput | Prisma.ArticleUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ArticleUpdateManyWithWhereWithoutUserInput | Prisma.ArticleUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ArticleScalarWhereInput | Prisma.ArticleScalarWhereInput[]
+}
+
+export type ArticleUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput> | Prisma.ArticleCreateWithoutUserInput[] | Prisma.ArticleUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.ArticleCreateOrConnectWithoutUserInput | Prisma.ArticleCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.ArticleUpsertWithWhereUniqueWithoutUserInput | Prisma.ArticleUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.ArticleCreateManyUserInputEnvelope
+  set?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  disconnect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  delete?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  connect?: Prisma.ArticleWhereUniqueInput | Prisma.ArticleWhereUniqueInput[]
+  update?: Prisma.ArticleUpdateWithWhereUniqueWithoutUserInput | Prisma.ArticleUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.ArticleUpdateManyWithWhereWithoutUserInput | Prisma.ArticleUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.ArticleScalarWhereInput | Prisma.ArticleScalarWhereInput[]
+}
+
 export type ArticleCreateWithoutCommentsInput = {
   id?: string
   title: string
@@ -428,6 +498,7 @@ export type ArticleCreateWithoutCommentsInput = {
   createdAt?: Date | string
   modifiedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutArticlesInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
 }
 
 export type ArticleUncheckedCreateWithoutCommentsInput = {
@@ -437,6 +508,7 @@ export type ArticleUncheckedCreateWithoutCommentsInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  userId?: string | null
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutArticlesInput
 }
 
@@ -464,6 +536,7 @@ export type ArticleUpdateWithoutCommentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutArticlesNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
 }
 
 export type ArticleUncheckedUpdateWithoutCommentsInput = {
@@ -473,6 +546,7 @@ export type ArticleUncheckedUpdateWithoutCommentsInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutArticlesNestedInput
 }
 
@@ -484,6 +558,7 @@ export type ArticleCreateWithoutCategoriesInput = {
   createdAt?: Date | string
   modifiedAt?: Date | string
   comments?: Prisma.CommentCreateNestedManyWithoutArticleInput
+  user?: Prisma.UserCreateNestedOneWithoutArticlesInput
 }
 
 export type ArticleUncheckedCreateWithoutCategoriesInput = {
@@ -493,6 +568,7 @@ export type ArticleUncheckedCreateWithoutCategoriesInput = {
   type: $Enums.ArticleType
   createdAt?: Date | string
   modifiedAt?: Date | string
+  userId?: string | null
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutArticleInput
 }
 
@@ -527,6 +603,55 @@ export type ArticleScalarWhereInput = {
   type?: Prisma.EnumArticleTypeFilter<"Article"> | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   modifiedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
+  userId?: Prisma.StringNullableFilter<"Article"> | string | null
+}
+
+export type ArticleCreateWithoutUserInput = {
+  id?: string
+  title: string
+  description: string
+  type: $Enums.ArticleType
+  createdAt?: Date | string
+  modifiedAt?: Date | string
+  comments?: Prisma.CommentCreateNestedManyWithoutArticleInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutArticlesInput
+}
+
+export type ArticleUncheckedCreateWithoutUserInput = {
+  id?: string
+  title: string
+  description: string
+  type: $Enums.ArticleType
+  createdAt?: Date | string
+  modifiedAt?: Date | string
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutArticleInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutArticlesInput
+}
+
+export type ArticleCreateOrConnectWithoutUserInput = {
+  where: Prisma.ArticleWhereUniqueInput
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput>
+}
+
+export type ArticleCreateManyUserInputEnvelope = {
+  data: Prisma.ArticleCreateManyUserInput | Prisma.ArticleCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type ArticleUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ArticleWhereUniqueInput
+  update: Prisma.XOR<Prisma.ArticleUpdateWithoutUserInput, Prisma.ArticleUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ArticleCreateWithoutUserInput, Prisma.ArticleUncheckedCreateWithoutUserInput>
+}
+
+export type ArticleUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.ArticleWhereUniqueInput
+  data: Prisma.XOR<Prisma.ArticleUpdateWithoutUserInput, Prisma.ArticleUncheckedUpdateWithoutUserInput>
+}
+
+export type ArticleUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.ArticleScalarWhereInput
+  data: Prisma.XOR<Prisma.ArticleUpdateManyMutationInput, Prisma.ArticleUncheckedUpdateManyWithoutUserInput>
 }
 
 export type ArticleUpdateWithoutCategoriesInput = {
@@ -537,6 +662,7 @@ export type ArticleUpdateWithoutCategoriesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   comments?: Prisma.CommentUpdateManyWithoutArticleNestedInput
+  user?: Prisma.UserUpdateOneWithoutArticlesNestedInput
 }
 
 export type ArticleUncheckedUpdateWithoutCategoriesInput = {
@@ -546,10 +672,52 @@ export type ArticleUncheckedUpdateWithoutCategoriesInput = {
   type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   comments?: Prisma.CommentUncheckedUpdateManyWithoutArticleNestedInput
 }
 
 export type ArticleUncheckedUpdateManyWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type ArticleCreateManyUserInput = {
+  id?: string
+  title: string
+  description: string
+  type: $Enums.ArticleType
+  createdAt?: Date | string
+  modifiedAt?: Date | string
+}
+
+export type ArticleUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentUpdateManyWithoutArticleNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutArticlesNestedInput
+}
+
+export type ArticleUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumArticleTypeFieldUpdateOperationsInput | $Enums.ArticleType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  modifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutArticleNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutArticlesNestedInput
+}
+
+export type ArticleUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -605,8 +773,10 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
+  userId?: boolean
   comments?: boolean | Prisma.Article$commentsArgs<ExtArgs>
   categories?: boolean | Prisma.Article$categoriesArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
@@ -617,6 +787,8 @@ export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
+  userId?: boolean
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
 export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -626,6 +798,8 @@ export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
+  userId?: boolean
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
 }, ExtArgs["result"]["article"]>
 
 export type ArticleSelectScalar = {
@@ -635,22 +809,29 @@ export type ArticleSelectScalar = {
   type?: boolean
   createdAt?: boolean
   modifiedAt?: boolean
+  userId?: boolean
 }
 
-export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "type" | "createdAt" | "modifiedAt", ExtArgs["result"]["article"]>
+export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "type" | "createdAt" | "modifiedAt" | "userId", ExtArgs["result"]["article"]>
 export type ArticleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.Article$commentsArgs<ExtArgs>
   categories?: boolean | Prisma.Article$categoriesArgs<ExtArgs>
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
   _count?: boolean | Prisma.ArticleCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ArticleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ArticleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
+}
+export type ArticleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.Article$userArgs<ExtArgs>
+}
 
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
   objects: {
     comments: Prisma.$CommentPayload<ExtArgs>[]
     categories: Prisma.$CategoryPayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -659,6 +840,7 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     type: $Enums.ArticleType
     createdAt: Date
     modifiedAt: Date
+    userId: string | null
   }, ExtArgs["result"]["article"]>
   composites: {}
 }
@@ -1055,6 +1237,7 @@ export interface Prisma__ArticleClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   comments<T extends Prisma.Article$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   categories<T extends Prisma.Article$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.Article$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Article$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1090,6 +1273,7 @@ export interface ArticleFieldRefs {
   readonly type: Prisma.FieldRef<"Article", 'ArticleType'>
   readonly createdAt: Prisma.FieldRef<"Article", 'DateTime'>
   readonly modifiedAt: Prisma.FieldRef<"Article", 'DateTime'>
+  readonly userId: Prisma.FieldRef<"Article", 'String'>
 }
     
 
@@ -1339,6 +1523,10 @@ export type ArticleCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.ArticleCreateManyInput | Prisma.ArticleCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1409,6 +1597,10 @@ export type ArticleUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Articles to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArticleIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1523,6 +1715,25 @@ export type Article$categoriesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
+}
+
+/**
+ * Article.user
+ */
+export type Article$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

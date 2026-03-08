@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { PaginationUtil } from 'src/common/utils/pagination.util';
@@ -15,15 +16,27 @@ import { Article, Prisma } from 'src/generated/prisma/client';
 export class ArticlesService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createArticleDto: CreateArticleDto) {
+  async create(createArticleDto: CreateArticleDto, userId: string) {
     const { categoryIds, ...articleData } = createArticleDto;
     try {
       const article = await this.databaseService.article.create({
         data: {
           ...articleData,
+          userId,
           categories: {
             connect: categoryIds.map((id) => ({ id })),
           },
+        },
+        include: {
+          categories: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          comments: true,
         },
       });
       return article;
@@ -90,10 +103,16 @@ export class ArticlesService {
     return article;
   }
 
-  async update(id: string, updateArticleDto: UpdateArticleDto) {
+  async update(id: string, updateArticleDto: UpdateArticleDto, userId: string) {
     try {
       // Check if article exists first
-      await this.findOne(id);
+      const article = await this.findOne(id);
+
+      if (article.userId && article.userId !== userId) {
+        throw new UnauthorizedException(
+          'You can only update your own articles',
+        );
+      }
 
       const { categoryIds, ...articleData } = updateArticleDto;
       // Perform the update
@@ -116,26 +135,50 @@ export class ArticlesService {
     }
   }
 
-  async remove(id: string) {
-    await this.findOne(id);
-    return await this.databaseService.article.delete({ where: { id } });
+  async remove(id: string, userId: string) {
+    try {
+      const article = await this.findOne(id);
+      if (article.userId && article.userId !== userId) {
+        throw new UnauthorizedException(
+          'You can only delete your own articles',
+        );
+      }
+      return await this.databaseService.article.delete({ where: { id } });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to delete article');
+    }
   }
 
-  async removeBulk(ids: string[]) {
-    // to verify the ids are valid
-    const articles = await this.databaseService.article.findMany({
-      where: { id: { in: ids } },
-    });
-    if (articles.length !== ids.length) {
-      const foundIds = articles.map((a) => a.id);
-      const missingIds = ids.filter((id) => !foundIds.includes(id));
-      throw new NotFoundException(
-        `Articles with IDs "${missingIds.join(', ')}" not found`,
-      );
+  async removeBulk(ids: string[], userId: string) {
+    try {
+      // to verify the ids are valid
+      const articles = await this.databaseService.article.findMany({
+        where: { id: { in: ids } },
+      });
+      if (articles.some((a) => a.userId && a.userId !== userId)) {
+        throw new UnauthorizedException(
+          'You can only delete your own articles',
+        );
+      }
+      if (articles.length !== ids.length) {
+        const foundIds = articles.map((a) => a.id);
+        const missingIds = ids.filter((id) => !foundIds.includes(id));
+        throw new NotFoundException(
+          `Articles with IDs "${missingIds.join(', ')}" not found`,
+        );
+      }
+      return await this.databaseService.article.deleteMany({
+        where: { id: { in: ids } },
+      });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to delete articles');
     }
-    return await this.databaseService.article.deleteMany({
-      where: { id: { in: ids } },
-    });
   }
 
   async bulkArticlesCategoryAssign(
@@ -163,6 +206,24 @@ export class ArticlesService {
       }
       throw new BadRequestException('Failed to assign category to articles');
     }
+  }
+
+  async findMine(paginationQuery: PaginationQueryDto, userId: string) {
+    const params = PaginationUtil.getPaginationParams(paginationQuery);
+    const articles = await this.databaseService.article.findMany({
+      where: { userId },
+      skip: params.skip,
+      take: params.limit,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        categories: { orderBy: { createdAt: 'desc' } },
+      },
+    });
+    return PaginationUtil.createPaginatedResult(
+      articles,
+      articles.length,
+      params,
+    );
   }
 
   // MY OLD BULK UPDATE METHOD

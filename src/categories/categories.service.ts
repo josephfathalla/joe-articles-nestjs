@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -11,10 +12,23 @@ import { DatabaseService } from '../database/database.service';
 export class CategoriesService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto, userId: string) {
     try {
       return await this.databaseService.category.create({
-        data: createCategoryDto,
+        data: {
+          ...createCategoryDto,
+          userId,
+        },
+        include: {
+          articles: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
       });
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -44,13 +58,29 @@ export class CategoriesService {
     return category;
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+  async update(
+    id: string,
+    updateCategoryDto: UpdateCategoryDto,
+    userId: string,
+  ) {
     try {
-      await this.findOne(id);
+      const category = await this.findOne(id);
+
+      if (category.userId && category.userId !== userId) {
+        throw new UnauthorizedException(
+          'You can only update your own categories',
+        );
+      }
 
       return await this.databaseService.category.update({
         where: { id },
         data: updateCategoryDto,
+        include: {
+          articles: true,
+          user: {
+            select: { id: true, name: true, email: true },
+          },
+        },
       });
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -60,11 +90,16 @@ export class CategoriesService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, userId: string) {
     try {
       // Get category with articles before deletion to return info
       const category = await this.findOne(id);
 
+      if (category.userId && category.userId !== userId) {
+        throw new UnauthorizedException(
+          'You can only delete your own categories',
+        );
+      }
       // Delete the category (Prisma automatically removes from join table)
       await this.databaseService.category.delete({ where: { id } });
 

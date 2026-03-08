@@ -23,6 +23,12 @@ model Article {
   modifiedAt  DateTime    @updatedAt
   comments    Comment[]
   categories  Category[]
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "article_user_id_idx")
+  @@index([id], name: "article_id_idx")
+  @@map("article")
 }
 
 enum ArticleType {
@@ -37,8 +43,12 @@ model Comment {
   modifiedAt DateTime @updatedAt
   articleId  String
   article    Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId], name: "comment_user_id_idx")
   @@index([articleId])
+  @@map("comment")
 }
 
 model Category {
@@ -47,6 +57,11 @@ model Category {
   createdAt  DateTime  @default(now())
   modifiedAt DateTime  @updatedAt
   articles   Article[]
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("category")
 }
 
 model User {
@@ -60,6 +75,9 @@ model User {
   sessions      Session[]
   accounts      Account[]
   verifications Verification[]
+  articles      Article[]
+  comments      Comment[]
+  categories    Category[]
 
   @@unique([email])
   @@map("user")

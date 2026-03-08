@@ -973,7 +973,8 @@ export const ArticleScalarFieldEnum = {
   description: 'description',
   type: 'type',
   createdAt: 'createdAt',
-  modifiedAt: 'modifiedAt'
+  modifiedAt: 'modifiedAt',
+  userId: 'userId'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
@@ -984,7 +985,8 @@ export const CommentScalarFieldEnum = {
   text: 'text',
   createdAt: 'createdAt',
   modifiedAt: 'modifiedAt',
-  articleId: 'articleId'
+  articleId: 'articleId',
+  userId: 'userId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -994,7 +996,8 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   createdAt: 'createdAt',
-  modifiedAt: 'modifiedAt'
+  modifiedAt: 'modifiedAt',
+  userId: 'userId'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]

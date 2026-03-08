@@ -29,6 +29,8 @@ export const createAuth = (databaseService: DatabaseService) => {
         // Add your frontend URL(s) here if different
         // 'http://localhost:5173', // Example: Vite dev server
       ],
+      secret:
+        process.env.BETTER_AUTH_SECRET || 'your-secret-key-min-32-chars-long',
       database: prismaAdapter(databaseService, {
         provider: 'postgresql',
       }),

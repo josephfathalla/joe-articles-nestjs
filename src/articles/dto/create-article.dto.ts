@@ -6,7 +6,6 @@ import {
   MaxLength,
   MinLength,
   IsUUID,
-  IsOptional,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { ArticleType } from '../../generated/prisma/client';

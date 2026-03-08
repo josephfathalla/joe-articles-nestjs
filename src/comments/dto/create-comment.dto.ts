@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   MaxLength,
@@ -18,4 +19,8 @@ export class CreateCommentDto {
   @IsUUID('4', { message: 'Invalid article ID format' })
   @IsNotEmpty({ message: 'Article ID is required' })
   articleId: string;
+
+  @IsUUID('4', { message: 'Invalid user ID format' })
+  @IsOptional()
+  userId: string;
 }
